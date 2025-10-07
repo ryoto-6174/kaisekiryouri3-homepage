@@ -3,64 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>割烹みずほ — 夜の料亭風</title>
+  <title>割烹みずほ — 夜の料亭</title>
   <style>
     /* --- 全体設定 --- */
     body {
       margin: 0;
       font-family: 'Hiragino Mincho ProN', serif;
       background: url('./washi-texture.jpg') center/cover no-repeat fixed;
-      color: #f5f5f5; /* 夜風に白文字 */
+      color: #f2f2f2;
       overflow-x: hidden;
-      position: relative;
       animation: washiMove 20s ease-in-out infinite alternate;
     }
 
-    /* 背景和紙のゆらぎ */
+    /* 背景の和紙をわずかに動かす */
     @keyframes washiMove {
       0% { background-position: center; }
       100% { background-position: center 10px; }
     }
 
-    /* 夜の柔らかい光 */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 20%, rgba(255,255,200,0.08), transparent 70%);
-      z-index: -1;
-      animation: lightShift 15s ease-in-out infinite alternate;
-    }
-    @keyframes lightShift {
-      0% { background-position: 40% 30%; }
-      100% { background-position: 60% 70%; }
-    }
-
-    /* ヘッダー */
+    /* --- ヘッダー --- */
     header {
-      background-color: rgba(0,0,0,0.45);
+      background-color: rgba(0,0,0,0.6);
       text-align: center;
       padding: 1rem 0;
       letter-spacing: 0.12em;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      opacity: 0; transform: translateY(-30px);
+      border-bottom: 1px solid #333;
+      opacity: 0; 
+      transform: translateY(-30px);
       transition: opacity 1.5s ease, transform 1.5s ease;
     }
     header.visible {
-      opacity: 1; transform: translateY(0);
+      opacity: 1; 
+      transform: translateY(0);
     }
     header h1 {
       margin: 0;
       font-size: 1.6rem;
-      color: #f5f5f5;
+      color: #f2f2f2;
     }
 
-    /* ナビ */
+    /* --- ナビ --- */
     nav {
       text-align: center;
       padding: 0.6rem 0;
-      background-color: rgba(0,0,0,0.35);
+      background-color: rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -68,41 +54,39 @@
       transform: translateY(-20px);
       transition: opacity 1.5s ease, transform 1.5s ease;
     }
-    nav.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    nav.visible { opacity: 1; transform: translateY(0); }
     nav a {
       position: relative;
-      color: #ddd;
+      color: #f2f2f2;
       margin: 0 1rem;
       text-decoration: none;
-      transition: color 0.25s;
       font-weight: 500;
+      transition: color 0.25s;
     }
-    /* 墨のにじみ風 */
+    /* 墨のにじみ風ホバー */
     nav a::after {
       content: "";
       position: absolute;
-      left: 0; bottom: -3px;
-      width: 100%; height: 3px;
-      background: radial-gradient(circle, rgba(166,138,100,0.6) 0%, rgba(166,138,100,0) 70%);
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 3px;
+      background: radial-gradient(circle, rgba(255,200,150,0.6) 0%, rgba(255,200,150,0) 70%);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
     }
-    nav a:hover::after {
-      transform: scaleX(1);
-    }
-    nav a:hover { color: #a68a64; }
+    nav a:hover::after { transform: scaleX(1); }
+    nav a:hover { color: #ffcc99; }
 
-    /* ヒーローセクション */
+    /* --- ヒーロー --- */
     .hero {
+      position: relative;
       background-image: url('./kaisekiryouri1.webp');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: brightness(0.9) saturate(0.95);
+      filter: brightness(0.85) saturate(0.95);
       height: 70vh;
       display: flex;
       justify-content: center;
@@ -111,35 +95,50 @@
       transform: scale(1.05);
       transition: opacity 2s ease, transform 1.8s ease;
     }
-    .hero.visible { opacity: 1; transform: scale(1); }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background-color: rgba(0,0,0,0.45); /* 夜風オーバーレイ */
+      z-index: 1;
+    }
+    .hero.visible { opacity:1; transform: scale(1); }
     .hero h2 {
-  background-color: rgba(0, 0, 0, 0.5); /* 黒の半透明 */
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-}
+      position: relative;
+      z-index: 2;
+      font-size: 2.2rem;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      background-color: rgba(0,0,0,0.3); /* 背景透け */
+    }
 
-    /* 各セクション */
+    /* --- セクション --- */
     section {
       padding: 3.2rem 10%;
       max-width: 900px;
       margin: auto;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid #444;
+      background: rgba(0,0,0,0.5);
       border-radius: 8px;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 1.2s ease, transform 1.2s ease;
     }
-    section.visible { opacity: 1; transform: translateY(0); }
+    section.visible { opacity:1; transform: translateY(0); }
     section h2 {
-      color: #a68a64;
-      border-left: 4px solid #a68a64;
+      color: #ffcc99;
+      border-left: 4px solid #ffcc99;
       padding-left: 10px;
       margin-bottom: 1rem;
     }
 
-    /* メニュー写真 */
+    .menu-item { margin-bottom: 1.6rem; }
+    .menu-item h3 { margin:0; color:#f2f2f2; }
+
+    /* 写真ズーム＆フェード */
     .menu-photo {
       width: 75%;
       max-width: 100%;
@@ -150,52 +149,46 @@
       transform: scale(1.05);
       transition: opacity 1.5s ease, transform 3s ease;
     }
-    .menu-photo.visible { opacity: 1; transform: scale(1); }
+    .menu-photo.visible { opacity:1; transform: scale(1); }
 
-    /* マップ */
-    .map-container {
-      width: 100%;
-      height: 400px;
-      margin-top: 1.5rem;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+    /* --- 地図 --- */
+    .map-container { width:100%; height:400px; margin-top:1.5rem; border-radius:8px; overflow:hidden; }
 
-    /* 予約ボタン */
+    /* --- 予約ボタン --- */
     .reserve-btn {
-      display: inline-block;
-      background-color: #a68a64;
-      color: #fff;
-      padding: 0.8rem 1.6rem;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-top: 1rem;
+      display:inline-block;
+      background-color:#ffcc99;
+      color:#111;
+      padding:0.8rem 1.6rem;
+      border-radius:6px;
+      text-decoration:none;
+      margin-top:1rem;
       transition: background-color 0.3s;
     }
-    .reserve-btn:hover { background-color: #8b7354; }
+    .reserve-btn:hover { background-color:#e6b877; }
 
-    /* フッター */
+    /* --- フッター --- */
     footer {
-      text-align: center;
-      padding: 2rem 0;
-      font-size: 0.9rem;
-      color: #ddd;
-      background-color: rgba(0,0,0,0.35);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      opacity: 0; transform: translateY(20px);
+      text-align:center;
+      padding:2rem 0;
+      font-size:0.9rem;
+      color:#aaa;
+      background-color: rgba(0,0,0,0.5);
+      border-top:1px solid #444;
+      opacity:0;
+      transform: translateY(20px);
       transition: opacity 1s ease, transform 1s ease;
     }
-    footer.visible { opacity: 1; transform: translateY(0); }
+    footer.visible { opacity:1; transform: translateY(0); }
 
     /* --- スマホ対応 --- */
-    @media (max-width: 600px) {
-      nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; padding: 0.5rem 0.2rem; }
-      nav a { font-size: 0.9rem; margin: 0 0.5rem; }
+    @media (max-width:600px){
+      nav{ display:flex; flex-wrap:wrap; justify-content:center; gap:0.4rem; padding:0.5rem 0.2rem; }
+      nav a{ font-size:0.9rem; margin:0 0.5rem; }
     }
   </style>
 </head>
 <body>
-
   <header><h1>割烹みずほ</h1></header>
 
   <nav>
@@ -206,7 +199,7 @@
     <a href="#reserve">ご予約</a>
   </nav>
 
-  <div class="hero"><h2>夜の料亭風・季節の懐石を味わう</h2></div>
+  <div class="hero"><h2>夜の料亭、季節の懐石</h2></div>
 
   <section id="about">
     <h2>お店について</h2>
@@ -216,20 +209,24 @@
   <section id="concept">
     <h2>こだわり</h2>
     <p>出汁は毎朝、昆布と鰹節を丁寧に引き出し、一椀ごとに最良の旨味を追求しています。器は京都や有田の職人による手仕事。料理を引き立てる色彩や質感にも心を尽くしています。</p>
+    <p>お客様一人ひとりの「特別な時間」を演出するため、季節の移ろいに合わせてお品書きも変化します。</p>
   </section>
 
   <section id="menu">
     <h2>お品書き</h2>
+
     <div class="menu-item">
       <h3>季節の懐石コース</h3>
       <p>旬の素材を使った月替わりのコースです。</p>
       <img src="https://images.unsplash.com/photo-1541542684-8f7f5b4e1b2a?q=80&w=600" alt="懐石料理1" class="menu-photo">
     </div>
+
     <div class="menu-item">
       <h3>昼膳</h3>
       <p>お昼限定の御膳スタイル。</p>
       <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=600" alt="懐石料理2" class="menu-photo">
     </div>
+
     <div class="menu-item">
       <h3>会席特選</h3>
       <p>贅沢な食材を取り入れた特選コース。</p>
@@ -239,12 +236,7 @@
 
   <section id="access">
     <h2>アクセス</h2>
-    <p>
-      東京都千代田区丸の内1-1-1<br>
-      JR東京駅より徒歩5分<br>
-      営業時間：11:30〜14:30 / 17:00〜22:00<br>
-      定休日：日曜・祝日
-    </p>
+    <p>東京都千代田区丸の内1-1-1<br>JR東京駅より徒歩5分<br>営業時間：11:30〜14:30 / 17:00〜22:00<br>定休日：日曜・祝日</p>
     <div class="map-container">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.962502074853!2d139.76394141563647!3d35.68123698019337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bf3708f6e65%3A0x5e4e9cf7d0c51a5c!2z5p2x5Lqs6YO95paw5a6_5Yy65p2x5Lqs5LiA5aSn6Ziq5YWs5Y-4!5e0!3m2!1sja!2sjp!4v1638777640325!5m2!1sja!2sjp"
@@ -260,16 +252,19 @@
     <a href="#" class="reserve-btn">Web予約フォーム</a>
   </section>
 
-  <footer><p>© 2025 割烹みずほ All Rights Reserved.</p></footer>
+  <footer>
+    <p>© 2025 割烹みずほ All Rights Reserved.</p>
+  </footer>
 
   <script>
+    /* --- Intersection Observer: フェードイン・スライド --- */
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold:0.2 });
 
     document.querySelectorAll('header, nav, .hero, section, footer, .menu-photo').forEach(el => {
       observer.observe(el);
