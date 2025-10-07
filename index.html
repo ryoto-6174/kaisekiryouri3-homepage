@@ -8,34 +8,85 @@
     body {
       margin: 0;
       font-family: 'Hiragino Mincho ProN', serif;
-      /* 和紙風テクスチャを外部URLで指定 */
-      background: url('https://images.unsplash.com/photo-1617196035738-39b1d50fdbb4?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+      background: url('./washi-texture.jpg') center/cover no-repeat fixed;
       color: #1b1b1b;
       overflow-x: hidden;
+      animation: washiMove 20s ease-in-out infinite alternate;
     }
+
+    /* 背景をわずかに動かすアニメーション */
+    @keyframes washiMove {
+      0% { background-position: center; }
+      100% { background-position: center 10px; }
+    }
+
     header {
       background-color: rgba(255,255,255,0.8);
       text-align: center;
       padding: 1rem 0;
       letter-spacing: 0.12em;
       border-bottom: 1px solid #e6e0da;
-      opacity: 0; transform: translateY(-20px);
-      transition: opacity 1s ease, transform 1s ease;
+      opacity: 0; transform: translateY(-30px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
     }
-    header.visible { opacity: 1; transform: translateY(0); }
-    header h1 { margin: 0; font-size: 1.6rem; color: #3e3a39; }
+    header.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: #3e3a39;
+    }
+
     nav {
       text-align: center;
       padding: 0.6rem 0;
-      background-color: rgba(255,255,255,0.8);
+      background-color: rgba(255,255,255,0.85);
       position: sticky;
       top: 0;
       z-index: 100;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
     }
-    nav a { color: #555; margin: 0 1rem; text-decoration: none; transition: color 0.25s; }
-    nav a:hover { color: #a68a64; }
+    nav.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav a {
+      position: relative;
+      color: #555;
+      margin: 0 1rem;
+      text-decoration: none;
+      transition: color 0.25s;
+      font-weight: 500;
+    }
+
+    /* “墨のにじみ風”ホバーエフェクト */
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 3px;
+      background: radial-gradient(circle, rgba(166,138,100,0.6) 0%, rgba(166,138,100,0) 70%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    nav a:hover {
+      color: #a68a64;
+    }
+
     .hero {
-      background-image: url('https://images.unsplash.com/photo-1506354666786-959d6d497f1a?auto=format&fit=crop&w=1600&q=80');
+      background-image: url('./kaisekiryouri1.webp');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -44,10 +95,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0; transform: scale(1.05);
-      transition: opacity 2s ease, transform 1.5s ease;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 2s ease, transform 1.8s ease;
     }
-    .hero.visible { opacity: 1; transform: scale(1); }
+    .hero.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
     .hero h2 {
       font-size: 2.2rem;
       color: #111;
@@ -58,6 +114,7 @@
       max-width: 90%;
       text-align: center;
     }
+
     section {
       padding: 3.2rem 10%;
       max-width: 900px;
@@ -65,13 +122,30 @@
       border-bottom: 1px solid #efe7df;
       background: rgba(255,255,255,0.85);
       border-radius: 8px;
-      opacity: 0; transform: translateY(30px);
+      opacity: 0;
+      transform: translateY(30px);
       transition: opacity 1.2s ease, transform 1.2s ease;
     }
-    section.visible { opacity: 1; transform: translateY(0); }
-    section h2 { color: #a68a64; border-left: 4px solid #a68a64; padding-left: 10px; margin-bottom: 1rem; }
-    .menu-item { margin-bottom: 1.6rem; }
-    .menu-item h3 { margin: 0; color: #3e3a39; }
+    section.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    section h2 {
+      color: #a68a64;
+      border-left: 4px solid #a68a64;
+      padding-left: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .menu-item {
+      margin-bottom: 1.6rem;
+    }
+    .menu-item h3 {
+      margin: 0;
+      color: #3e3a39;
+    }
+
+    /* 写真がゆっくりズーム＆フェード */
     .menu-photo {
       width: 75%;
       max-width: 100%;
@@ -79,11 +153,22 @@
       display: block;
       margin: 1.2rem auto;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1.5s ease, transform 1.5s ease;
+      transform: scale(1.05);
+      transition: opacity 1.5s ease, transform 3s ease;
     }
-    .menu-photo.visible { opacity: 1; transform: translateY(0); }
-    .map-container { width: 100%; height: 400px; margin-top: 1.5rem; border-radius: 8px; overflow: hidden; }
+    .menu-photo.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .map-container {
+      width: 100%;
+      height: 400px;
+      margin-top: 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
     .reserve-btn {
       display: inline-block;
       background-color: #a68a64;
@@ -94,7 +179,10 @@
       margin-top: 1rem;
       transition: background-color 0.3s;
     }
-    .reserve-btn:hover { background-color: #8b7354; }
+    .reserve-btn:hover {
+      background-color: #8b7354;
+    }
+
     footer {
       text-align: center;
       padding: 2rem 0;
@@ -105,11 +193,29 @@
       opacity: 0; transform: translateY(20px);
       transition: opacity 1s ease, transform 1s ease;
     }
-    footer.visible { opacity: 1; transform: translateY(0); }
+    footer.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* --- スマホサイズでのデザイン調整 --- */
+    @media (max-width: 600px) {
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.5rem 0.2rem;
+      }
+      nav a {
+        font-size: 0.9rem;
+        margin: 0 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header><h1>割烹みずほ</h1></header>
+
   <nav>
     <a href="#about">お店について</a>
     <a href="#concept">こだわり</a>
@@ -133,20 +239,23 @@
 
   <section id="menu">
     <h2>お品書き</h2>
+
     <div class="menu-item">
       <h3>季節の懐石コース</h3>
       <p>旬の素材を使った月替わりのコースです。</p>
-      <img src="https://images.unsplash.com/photo-1541542684-8f7f5b4e1b2a?auto=format&fit=crop&w=800&q=80" alt="懐石料理1" class="menu-photo">
+      <img src="https://images.unsplash.com/photo-1541542684-8f7f5b4e1b2a?q=80&w=600" alt="懐石料理1" class="menu-photo">
     </div>
+
     <div class="menu-item">
       <h3>昼膳</h3>
       <p>お昼限定の御膳スタイル。</p>
-      <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80" alt="懐石料理2" class="menu-photo">
+      <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=600" alt="懐石料理2" class="menu-photo">
     </div>
+
     <div class="menu-item">
       <h3>会席特選</h3>
       <p>贅沢な食材を取り入れた特選コース。</p>
-      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="懐石料理3" class="menu-photo">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600" alt="懐石料理3" class="menu-photo">
     </div>
   </section>
 
@@ -166,4 +275,27 @@
     </div>
   </section>
 
-  <
+  <section id="reserve">
+    <h2>ご予約</h2>
+    <p>お電話またはWebにてご予約を承っております。特別な日の会食や記念日などにもご利用ください。</p>
+    <a href="tel:03-1234-5678" class="reserve-btn">お電話で予約</a>
+    <a href="#" class="reserve-btn">Web予約フォーム</a>
+  </section>
+
+  <footer><p>© 2025 割烹みずほ All Rights Reserved.</p></footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('header, nav, .hero, section, footer, .menu-photo').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
