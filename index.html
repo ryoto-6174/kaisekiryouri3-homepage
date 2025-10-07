@@ -3,62 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>割烹みずほ — 季節の味わい</title>
+  <title>割烹みずほ — 夜の料亭風</title>
   <style>
-   body {
-  margin: 0;
-  font-family: 'Hiragino Mincho ProN', serif;
-  background: url('./washi-texture.jpg') center/cover no-repeat fixed;
-  color: #f5f5f5; /* 夜風に白文字 */
-  overflow-x: hidden;
-  animation: washiMove 20s ease-in-out infinite alternate;
-  position: relative; /* 光エフェクト用 */
-}
-/* 夜の料亭風の柔らかい光 */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 20%, rgba(255,255,200,0.08), transparent 70%);
-  z-index: -1;
-  animation: lightShift 15s ease-in-out infinite alternate;
-}
+    /* --- 全体設定 --- */
+    body {
+      margin: 0;
+      font-family: 'Hiragino Mincho ProN', serif;
+      background: url('./washi-texture.jpg') center/cover no-repeat fixed;
+      color: #f5f5f5; /* 夜風に白文字 */
+      overflow-x: hidden;
+      position: relative;
+      animation: washiMove 20s ease-in-out infinite alternate;
+    }
 
-@keyframes lightShift {
-  0% { background-position: 40% 30%; }
-  100% { background-position: 60% 70%; }
-}
-
-    /* 背景をわずかに動かすアニメーション */
+    /* 背景和紙のゆらぎ */
     @keyframes washiMove {
       0% { background-position: center; }
       100% { background-position: center 10px; }
     }
 
+    /* 夜の柔らかい光 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 20%, rgba(255,255,200,0.08), transparent 70%);
+      z-index: -1;
+      animation: lightShift 15s ease-in-out infinite alternate;
+    }
+    @keyframes lightShift {
+      0% { background-position: 40% 30%; }
+      100% { background-position: 60% 70%; }
+    }
+
+    /* ヘッダー */
     header {
-      background-color: rgba(255,255,255,0.8);
+      background-color: rgba(0,0,0,0.45);
       text-align: center;
       padding: 1rem 0;
       letter-spacing: 0.12em;
-      border-bottom: 1px solid #e6e0da;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
       opacity: 0; transform: translateY(-30px);
       transition: opacity 1.5s ease, transform 1.5s ease;
     }
     header.visible {
       opacity: 1; transform: translateY(0);
     }
-
     header h1 {
       margin: 0;
       font-size: 1.6rem;
-      color: #3e3a39;
+      color: #f5f5f5;
     }
 
+    /* ナビ */
     nav {
       text-align: center;
       padding: 0.6rem 0;
-      background-color: rgba(255,255,255,0.85);
+      background-color: rgba(0,0,0,0.35);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -70,24 +72,20 @@ body::before {
       opacity: 1;
       transform: translateY(0);
     }
-
     nav a {
       position: relative;
-      color: #555;
+      color: #ddd;
       margin: 0 1rem;
       text-decoration: none;
       transition: color 0.25s;
       font-weight: 500;
     }
-
-    /* “墨のにじみ風”ホバーエフェクト */
+    /* 墨のにじみ風 */
     nav a::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 100%;
-      height: 3px;
+      left: 0; bottom: -3px;
+      width: 100%; height: 3px;
       background: radial-gradient(circle, rgba(166,138,100,0.6) 0%, rgba(166,138,100,0) 70%);
       transform: scaleX(0);
       transform-origin: left;
@@ -96,17 +94,15 @@ body::before {
     nav a:hover::after {
       transform: scaleX(1);
     }
+    nav a:hover { color: #a68a64; }
 
-    nav a:hover {
-      color: #a68a64;
-    }
-
+    /* ヒーローセクション */
     .hero {
       background-image: url('./kaisekiryouri1.webp');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: brightness(1.08) saturate(0.95);
+      filter: brightness(0.9) saturate(0.95);
       height: 70vh;
       display: flex;
       justify-content: center;
@@ -115,40 +111,33 @@ body::before {
       transform: scale(1.05);
       transition: opacity 2s ease, transform 1.8s ease;
     }
-    .hero.visible {
-      opacity: 1;
-      transform: scale(1);
+    .hero.visible { opacity: 1; transform: scale(1); }
+    .hero h2 {
+      font-size: 2.2rem;
+      color: #fff;
+      background-color: rgba(0,0,0,0.45); /* 透ける背景 */
+      backdrop-filter: blur(6px);
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      max-width: 90%;
+      text-align: center;
+      letter-spacing: 0.05em;
     }
 
-   .hero h2 {
-  font-size: 2.2rem;
-  color: #fff; /* 夜に映える白文字 */
-  background-color: rgba(0,0,0,0.45); /* 半透明で文字背景透ける */
-  backdrop-filter: blur(6px); /* 背景をぼかす */
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  max-width: 90%;
-  text-align: center;
-  letter-spacing: 0.05em;
-}
- 
-
+    /* 各セクション */
     section {
       padding: 3.2rem 10%;
       max-width: 900px;
       margin: auto;
-      border-bottom: 1px solid #efe7df;
-      background: rgba(255,255,255,0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.4);
       border-radius: 8px;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 1.2s ease, transform 1.2s ease;
     }
-    section.visible {
-      opacity: 1; transform: translateY(0);
-    }
-
+    section.visible { opacity: 1; transform: translateY(0); }
     section h2 {
       color: #a68a64;
       border-left: 4px solid #a68a64;
@@ -156,15 +145,7 @@ body::before {
       margin-bottom: 1rem;
     }
 
-    .menu-item {
-      margin-bottom: 1.6rem;
-    }
-    .menu-item h3 {
-      margin: 0;
-      color: #3e3a39;
-    }
-
-    /* 写真がゆっくりズーム＆フェード */
+    /* メニュー写真 */
     .menu-photo {
       width: 75%;
       max-width: 100%;
@@ -175,11 +156,9 @@ body::before {
       transform: scale(1.05);
       transition: opacity 1.5s ease, transform 3s ease;
     }
-    .menu-photo.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
+    .menu-photo.visible { opacity: 1; transform: scale(1); }
 
+    /* マップ */
     .map-container {
       width: 100%;
       height: 400px;
@@ -188,6 +167,7 @@ body::before {
       overflow: hidden;
     }
 
+    /* 予約ボタン */
     .reserve-btn {
       display: inline-block;
       background-color: #a68a64;
@@ -198,41 +178,30 @@ body::before {
       margin-top: 1rem;
       transition: background-color 0.3s;
     }
-    .reserve-btn:hover {
-      background-color: #8b7354;
-    }
+    .reserve-btn:hover { background-color: #8b7354; }
 
+    /* フッター */
     footer {
       text-align: center;
       padding: 2rem 0;
       font-size: 0.9rem;
-      color: #777;
-      background-color: rgba(255,255,255,0.8);
-      border-top: 1px solid #efe7df;
+      color: #ddd;
+      background-color: rgba(0,0,0,0.35);
+      border-top: 1px solid rgba(255,255,255,0.1);
       opacity: 0; transform: translateY(20px);
       transition: opacity 1s ease, transform 1s ease;
     }
-    footer.visible {
-      opacity: 1; transform: translateY(0);
-    }
+    footer.visible { opacity: 1; transform: translateY(0); }
 
-    /* --- スマホサイズでのデザイン調整 --- */
+    /* --- スマホ対応 --- */
     @media (max-width: 600px) {
-      nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.4rem;
-        padding: 0.5rem 0.2rem;
-      }
-      nav a {
-        font-size: 0.9rem;
-        margin: 0 0.5rem;
-      }
+      nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; padding: 0.5rem 0.2rem; }
+      nav a { font-size: 0.9rem; margin: 0 0.5rem; }
     }
   </style>
 </head>
 <body>
+
   <header><h1>割烹みずほ</h1></header>
 
   <nav>
@@ -243,7 +212,7 @@ body::before {
     <a href="#reserve">ご予約</a>
   </nav>
 
-  <div class="hero"><h2>季節を味わう、心づくしの懐石</h2></div>
+  <div class="hero"><h2>夜の料亭風・季節の懐石を味わう</h2></div>
 
   <section id="about">
     <h2>お店について</h2>
@@ -253,24 +222,20 @@ body::before {
   <section id="concept">
     <h2>こだわり</h2>
     <p>出汁は毎朝、昆布と鰹節を丁寧に引き出し、一椀ごとに最良の旨味を追求しています。器は京都や有田の職人による手仕事。料理を引き立てる色彩や質感にも心を尽くしています。</p>
-    <p>お客様一人ひとりの「特別な時間」を演出するため、季節の移ろいに合わせてお品書きも変化します。</p>
   </section>
 
   <section id="menu">
     <h2>お品書き</h2>
-
     <div class="menu-item">
       <h3>季節の懐石コース</h3>
       <p>旬の素材を使った月替わりのコースです。</p>
       <img src="https://images.unsplash.com/photo-1541542684-8f7f5b4e1b2a?q=80&w=600" alt="懐石料理1" class="menu-photo">
     </div>
-
     <div class="menu-item">
       <h3>昼膳</h3>
       <p>お昼限定の御膳スタイル。</p>
       <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=600" alt="懐石料理2" class="menu-photo">
     </div>
-
     <div class="menu-item">
       <h3>会席特選</h3>
       <p>贅沢な食材を取り入れた特選コース。</p>
@@ -318,4 +283,3 @@ body::before {
   </script>
 </body>
 </html>
-
